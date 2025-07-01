@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 # Load images
 img1 = cv2.imread('c.png')
 img2 = cv2.imread('s.png')
-if img1 is None or img2 is None:
-    raise FileNotFoundError("Check file paths")
 
 # Convert to RGB for display
 img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
