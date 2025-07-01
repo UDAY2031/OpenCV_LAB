@@ -1,32 +1,35 @@
 import cv2
 import matplotlib.pyplot as plt
 
-# Load and convert image
-img = cv2.imread('sample.png')
-img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+# Load the image using OpenCV (in BGR format by default)
+img = cv2.imread('s2.png')
 
-# Convert to other color spaces
-hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
-ycbcr = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
+# Convert the image from BGR to RGB for correct color display in matplotlib
+rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-# Combine all channels
-images = [img_rgb] + list(cv2.split(hsv)) + list(cv2.split(lab)) + list(cv2.split(ycbcr))
+# Convert RGB image to different color spaces
+hsv   = cv2.cvtColor(rgb, cv2.COLOR_RGB2HSV)       # RGB to HSV
+lab   = cv2.cvtColor(rgb, cv2.COLOR_RGB2LAB)       # RGB to LAB
+ycrcb = cv2.cvtColor(rgb, cv2.COLOR_RGB2YCrCb)     # RGB to YCrCb
+
+# Split each color space into individual channels
+imgs = [rgb] + list(cv2.split(hsv)) + list(cv2.split(lab)) + list(cv2.split(ycrcb))
+
+# Titles for each subplot
 titles = [
-    'Original RGB',
+    'RGB',
     'HSV - H', 'HSV - S', 'HSV - V',
     'LAB - L', 'LAB - A', 'LAB - B',
-    'YCbCr - Y', 'YCbCr - Cb', 'YCbCr - Cr'
+    'YCrCb - Y', 'YCrCb - Cr', 'YCrCb - Cb'
 ]
 
-# Display images
-plt.figure(figsize=(15, 6))
-for i in range(len(images)):
-    plt.subplot(2, 5, i + 1)
-    cmap = None if i == 0 else 'gray'
-    plt.imshow(images[i], cmap=cmap)
+# Plot all images
+plt.figure(figsize=(12, 6))
+for i in range(len(imgs)):
+    plt.subplot(2, 5, i + 1)                         # Create subplot grid (2 rows x 5 columns)
+    cmap = None if i == 0 else 'gray'               # Use color for RGB, grayscale for channels
+    plt.imshow(imgs[i], cmap=cmap)
     plt.title(titles[i])
-    plt.axis('off')
 
 plt.tight_layout()
 plt.show()
