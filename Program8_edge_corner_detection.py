@@ -13,19 +13,18 @@ original_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 edges = cv2.Canny(gray, 100, 200)
 
 # 2. Harris Corner Detection (on a copy of the original)
-harris_img = img.copy()
+
 corners = cv2.cornerHarris(np.float32(gray), 2, 3, 0.04)
-harris_img[corners > 0.01 * corners.max()] = [255, 0, 0]  # Red corners
-harris_rgb = cv2.cvtColor(harris_img, cv2.COLOR_BGR2RGB)
+img[corners > 0.01 * corners.max()] = [255, 0, 0]  # Red corners
+harris_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 # 3. Hough Line Detection (on a copy of the original)
-hough_img = img.copy()
 lines = cv2.HoughLinesP(edges, 1, np.pi / 180, threshold=100, minLineLength=50, maxLineGap=10)
 if lines is not None:
     for line in lines:
         x1, y1, x2, y2 = line[0]
-        cv2.line(hough_img, (x1, y1), (x2, y2), (0, 255, 0), 2)  # Green lines
-hough_rgb = cv2.cvtColor(hough_img, cv2.COLOR_BGR2RGB)
+        cv2.line(img, (x1, y1), (x2, y2), (0, 255, 0), 2)  # Green lines
+hough_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 # Prepare images and titles
 images = [original_rgb, edges, harris_rgb, hough_rgb]
