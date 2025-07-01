@@ -21,7 +21,8 @@ for i in range(1, num):  # Skip background (label 0)
 
 print(f"Total regions (excluding background): {num - 1}")
 
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 # Show result
-plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+plt.imshow(img)
 plt.axis('off')
 plt.show()
