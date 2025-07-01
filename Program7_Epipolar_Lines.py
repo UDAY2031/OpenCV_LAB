@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Load stereo image and split into left and right images
-img = cv2.imread('image.jpg')
+img = cv2.imread('sample.png')
 h, w = img.shape[:2]
 imgL = img[:, :w//2]  # Left image
 imgR = img[:, w//2:]  # Right image
@@ -38,8 +38,10 @@ for i in range(2):
     
     if i == 0:  # Draw lines only on left image
         for r in lines:
-            x0, y0 = 0, int(-r[2]/r[1])
-            x1, y1 = imgL.shape[1], int(-(r[2] + r[0]*x1)/r[1])
+            x0 = 0
+            y0 =  int(-r[2]/r[1])
+            x1 = imgL.shape[1]
+            y1 =  int(-(r[2] + r[0]*x1)/r[1])
             ax.plot([x0, x1], [y0, y1], color='blue')
 
 plt.tight_layout()
