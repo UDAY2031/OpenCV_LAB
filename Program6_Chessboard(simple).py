@@ -1,3 +1,7 @@
+#*******************************IMPORTANT**********************************************************
+# This program only prints image, so just print error and required output by using print statement*
+#**************************************************************************************************
+
 # 6. Camera Calibration using Chessboard
 import cv2
 import numpy as np
@@ -17,3 +21,7 @@ x = cv2.drawChessboardCorners(x, (7, 7), corners, found)
 plt.imshow(cv2.cvtColor(x, cv2.COLOR_BGR2RGB))
 plt.title("Chessboard Corners")
 plt.show()
+
+#*******************************IMPORTANT*********************************************************
+# This program only prints image, so just print error and required output by using print statement
+#*************************************************************************************************
