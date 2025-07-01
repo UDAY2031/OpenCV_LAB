@@ -1,21 +1,32 @@
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
 
-image_rgb= cv2.imread('sample.png')
-image_rgb=cv2.cvtColor(image_rgb,cv2.COLOR_BGR2RGB)
-# Convert RGB image to different color spaces
-image_hsv = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2HSV)
-image_lab = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2LAB)
-image_ycrcb = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2YCrCb)
+# Load and convert image
+img = cv2.imread('sample.png')
+img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-colors=[image_rgb,image_hsv,image_lab,image_ycrcb]
-tlts=["RGB","HSV","LAB","YCbCr"]
-plt.figure(figsize=(12,6))
-for i in range(4):
-    plt.subplot(2,2,i+1)
-    plt.imshow(colors[i])
-    plt.title(tlts[i])
-    plt.axis("off")
+# Convert to other color spaces
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+ycbcr = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
+
+# Combine all channels
+images = [img_rgb] + list(cv2.split(hsv)) + list(cv2.split(lab)) + list(cv2.split(ycbcr))
+titles = [
+    'Original RGB',
+    'HSV - H', 'HSV - S', 'HSV - V',
+    'LAB - L', 'LAB - A', 'LAB - B',
+    'YCbCr - Y', 'YCbCr - Cb', 'YCbCr - Cr'
+]
+
+# Display images
+plt.figure(figsize=(15, 6))
+for i in range(len(images)):
+    plt.subplot(2, 5, i + 1)
+    cmap = None if i == 0 else 'gray'
+    plt.imshow(images[i], cmap=cmap)
+    plt.title(titles[i])
+    plt.axis('off')
+
 plt.tight_layout()
 plt.show()
